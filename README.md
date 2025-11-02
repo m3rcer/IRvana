@@ -62,7 +62,7 @@ This project also integrates obfuscation at the IR level using OLLVM. Techniques
 
 Lastly, IRvana includes built-in LLVM tools and multiple POCs in C++ and Rust that demonstrate JIT (Just in time) execution using ORCJIT and MCJIT capable of interpreting generated IR. Maldev related integrations such as in-memory IR loading and encrypted payload decryption have also been documented for real world applications. These examples bridge LLVM IR tooling with malware development practices to explore JIT code execution and BYOI techniques in depth.
 
-# Project structure
+# Main Project structure
 
 ```
 IRVana/
@@ -120,7 +120,24 @@ IRvana.sln --> Primary project for handling IR generation and obfuscation
 |   |   └── RemoteLoad --> Loads obfuscated IR over the HTTP and executes via JIT in memory
 ```
 
-# Setup Prerequisites
+# Installation using a script
+
+You can just run the below commands to install the entire project including setup
+```powershell
+# Run using an elevated powershell
+Set-ExecutionPolicy -Force Bypass
+iex(iwr -Uri https://raw.githubusercontent.com/Cipher7/IRvana/refs/heads/main/Install.ps1 -UseBasicParsing)
+```
+
+# Docker container
+```docker
+docker build -t irvana-windows .
+docker run -it --rm -v <Host machine folder>:C:\IRvana\Shared irvana-windows
+```
+
+# Manual Installation
+
+## Setup Prerequisites
 
 These steps are prerequisites required before using the project and interpreters. To look at build instructions for IRvana.sln and interpreters, please reference README.md in their respective directories.
 
@@ -129,7 +146,7 @@ These steps are prerequisites required before using the project and interpreters
 Install git and clone project source on Windows.
 
 ```PowerShell
-> git clone https://github.com/IRvana
+> git clone https://github.com/m3rcer/IRvana.git
 > cd IRvana
 ```
 

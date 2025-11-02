@@ -1,0 +1,211 @@
+# Global ignores for this repository (IRvana)
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+Icon?
+._*
+.Spotlight-V100/
+.Trashes/
+*.lnk
+
+# Temporary files
+*.swp
+*~ 
+.*.sw?
+*.bak
+*.tmp
+
+# Windows
+*.exe
+*.dll
+*.pdb
+
+# Visual Studio / .NET
+.vs/
+*.user
+*.suo
+*.userosscache
+*.csproj.user
+*.cache
+bin/
+obj/
+TestResults/
+*.nupkg
+*.snk
+
+# JetBrains IDEs (IntelliJ, PyCharm, Rider, WebStorm, etc.)
+.idea/
+*.iml
+*.iws
+out/
+
+# VS Code
+.vscode/
+.history/
+.code-workspace
+
+# macOS
+.AppleDouble
+.LSOverride
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log*
+yarn-debug.log*
+.pnpm-debug.log*
+package-lock.json.lock  # accidental merges
+dist/
+build/
+.next/
+.nuxt/
+.cache/
+.env
+.env.local
+.env.*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.env/
+venv/
+ENV/
+env/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.pytest_cache/
+coverage.xml
+htmlcov/
+.tox/
+.mypy_cache/
+.local/
+instance/
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+target/
+build/
+.classpath
+.project
+.settings/
+
+# Maven
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+dependency-reduced-pom.xml
+release.properties
+reloaction.properties
+*.log
+
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Golang
+bin/
+pkg/
+vendor/
+*.test
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Rust / Cargo
+target/
+**/*.rs.bk
+
+# C/C++
+*.o
+*.obj
+*.elf
+*.out
+*.a
+*.lib
+*.so
+*.dylib
+
+# Python packaging
+dist/
+build/
+*.egg-info/
+
+# Ruby
+*.gem
+*.rbc
+/.bundle/
+/vendor/bundle
+/log/
+tmp/
+*.pid
+*.seed
+*.sidekiq
+
+# Docker
+docker-compose.override.yml
+.env.*.local
+docker-compose.*.local
+Dockerfile.dev
+docker-sync.yml
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+crash.log
+override.tf
+override.tf.json
+terraform.tfvars
+terraform.tfvars.json
+
+# Ansible
+*.retry
+vault/
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+*.sqlite3
+
+# Archives and packages
+*.7z
+*.zip
+*.tar.gz
+*.rar
+
+# Certificates, keys, secrets
+*.pem
+*.key
+*.cer
+*.crt
+*.p12
+*.pfx
+
+# Editors
+*~.nib
+*.sublime-workspace
+*.sublime-project
+*.komodoproject
+
+# Misc
+coverage/
+reports/
+.idea/
+.cache/
+local_settings.py
+
+# allow tracking this README in the repo root (uncomment if desired)
+# !README.md
+
+# End of .gitignore
