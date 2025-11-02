@@ -126,7 +126,7 @@ You can just run the below commands to install the entire project including setu
 ```powershell
 # Run using an elevated powershell
 Set-ExecutionPolicy -Force Bypass
-iex(iwr -Uri https://raw.githubusercontent.com/Cipher7/IRvana/refs/heads/main/Install.ps1 -UseBasicParsing)
+iex(iwr -Uri https://raw.githubusercontent.com/m3rcer/IRvana/refs/heads/main/Install.ps1 -UseBasicParsing)
 ```
 
 # Docker container

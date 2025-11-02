@@ -63,8 +63,8 @@ $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";"
 #     Write-Host "Windows SDK installed."
 
 # Clone IRvana repository
-#git clone --depth 1 https://github.com/m3rcer/IRvana.git C:\IRvana\repo (commented for testing)
-git clone --depth 1 https://github.com/Cipher7/IRvana C:\IRvana\repo
+git clone --depth 1 https://github.com/m3rcer/IRvana.git C:\IRvana\repo 
+# git clone --depth 1 https://github.com/Cipher7/IRvana C:\IRvana\repo (commented for testing)
 
 # Set up environment
 $PATH="C:\\IRvana\\bin;C:\\IRvana\\clang\\bin;C:\\IRvana\\nim-1.6.6\\bin;C:\\Users\\ContainerUser\\.cargo\\bin;${PATH}"
