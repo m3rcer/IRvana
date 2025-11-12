@@ -2,7 +2,7 @@
   <img src="IRVana.png" width=60% height=60%>
 </p>
 
-*IRvana is a personal learning and experimentation project centered around the LLVM framework and its intermediate representation (IR) formats, with a focus on code execution, reverse engineering, and JIT experimentation.
+*IRvana is a learning and experimentation project centered around the LLVM framework and its intermediate representation (IR) formats, with a focus on code execution, reverse engineering, and JIT experimentation.
 While its roots are in offensive research, IRvana can be equally valuable for LLVM enthusiasts and developers looking to explore the inner workings of LLVM IR, its tooling, and its practical applications for IR debugging, transformation, and multi-language analysis. These experiments have been specifically targetted for the Windows platform. This choice is intentional, as Windows remains the primary environment of interest for red teams/offensive security and LLVM based Windows development is relatively less widespread compared to Unix like systems.*
 
 Project features:
