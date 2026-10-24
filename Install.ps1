@@ -29,7 +29,8 @@ Remove-Item C:\downloads\rustup-init.exe -Force
 Write-Host "Installing Nim 1.6.6..."; `
 $wc = New-Object System.Net.WebClient; `
 $wc.DownloadFile('https://nim-lang.org/download/nim-1.6.6_x64.zip', 'C:\downloads\nim.zip'); `
-& 'C:\Program Files\7-Zip\7z.exe' x C:\downloads\nim.zip -oC:\IRvana\nim-1.6.6 | Out-Null; `
+& 'C:\Program Files\7-Zip\7z.exe' x C:\downloads\nim.zip -oC:\IRvana\ | Out-Null; `
+setx PATH "$env:PATH;C:\IRvana\nim-1.6.6\bin;${PATH}" `
 Remove-Item C:\downloads\nim.zip -Force
 
 # Download and extract LLVM 18.1.5
@@ -98,3 +99,8 @@ Copy-Item -Path C:\IRvana\vs_env.mk -Destination C:\IRvana\IRgen\c\vs_env.mk -Fo
 Copy-Item -Path C:\IRvana\vs_env.mk -Destination C:\IRvana\IRgen\cxx\vs_env.mk -Force; `
 Copy-Item -Path C:\IRvana\vs_env.mk -Destination C:\IRvana\IRgen\nim\vs_env.mk -Force; `
 Copy-Item -Path C:\IRvana\vs_env.mk -Destination C:\IRvana\IRgen\rust\vs_env.mk -Force;
+
+# VS Symfix for 2019
+New-Item -ItemType Directory -Path "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional" -Force `
+New-Item -ItemType Junction -Path "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\DIA SDK" -Value "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\DIA SDK"
+
