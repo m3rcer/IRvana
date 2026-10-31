@@ -49,7 +49,6 @@ ir_exec <file.ll> [fn_name] [load_libs] [ir_args] [dll_path] [--async]
 
 **Build:**
 ```bat
-cd illi
 .\build.bat
 ```
 
