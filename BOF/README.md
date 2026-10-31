@@ -53,5 +53,5 @@ cd illi
 .\build.bat
 ```
 
-Uses `clang.exe` from IRvana's bundled `LLVM-18.1.5\bin\` and no separate toolchain required.
+Uses `clang-cl.exe` from IRvana's bundled `LLVM-18.1.5\bin\` and no separate toolchain required.
 
