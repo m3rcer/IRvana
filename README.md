@@ -14,6 +14,8 @@ Project features:
     - Leverage potential lolbas style execution with LLVM’s lli interpreter
     - Working POCs using ORCJIT and MCJIT for runtime IR execution
     - Showcase malware development techniques and integration with LLVM interpreters for improved OPSEC
+    - C2 integrations for IR based JIT execution using BOFs
+
 
 Blog References:
 - <https://whiteknightlabs.com/2025/12/23/just-in-time-for-runtime-interpretation-unmasking-the-world-of-llvm-ir-based-jit-execution/>
