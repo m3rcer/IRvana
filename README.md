@@ -38,6 +38,7 @@ Here's an index of the project documentation:
 - [Malware Development and LLVM interpreters](Maldev/README.md#malware-development-and-llvm-interpreters)
   - [IR Payload Encryption](Maldev/IREncryption/README.md#ir-payload-encryption)
   - [IR Payload Staging from Remote Server](Maldev/RemoteLoad/README.md#ir-payload-staging-from-remote-server)
+- [C2 Integrations for IR Based JIT Execution](BOF/README.md)
 - [Conclusion and Credits](#conclusion-and-credits)
 
 ## Introduction
@@ -122,6 +123,17 @@ IRvana.sln --> Primary project for handling IR generation and obfuscation
 ├── Maldev/
 |   |   └── IREncryption --> POC for to AES Encrypt LLVM IR before execution
 |   |   └── RemoteLoad --> Loads obfuscated IR over the HTTP and executes via JIT in memory
+BOF/
+│
+├── README.md              --> C2 integrations for IR-based JIT execution via BOFs
+│
+└── illi/                  --> Adaptix C2 plugin (ORC JIT BOF)
+    │
+    ├── illi_orc_bof.c     --> BOF source using ORC JIT
+    ├── illi_orc_bof.x64.o --> Precompiled x64 BOF
+    ├── build.bat          --> Compile using IRvana's bundled clang
+    ├── illi.axs           --> Adaptix plugin
+    └── LLVM-C.dll         --> LLVM 18 JIT engine DLL
 ```
 
 # Installation using a script
